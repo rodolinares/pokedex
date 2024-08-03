@@ -3,7 +3,7 @@ import { Router } from '@angular/router'
 
 import { lastValueFrom } from 'rxjs'
 
-import { Pokemon } from '@features/models/pokemon-list.model'
+import { Resource } from '@features/models/resource.model'
 import { PokemonService } from '@features/services/pokemon.service'
 
 @Component({
@@ -12,7 +12,7 @@ import { PokemonService } from '@features/services/pokemon.service'
   styleUrl: './poke-list.component.css'
 })
 export class PokeListComponent implements OnInit {
-  pokeData: Pokemon[] = []
+  pokeData: Resource[] = []
 
   constructor(
     private router: Router,
@@ -24,14 +24,14 @@ export class PokeListComponent implements OnInit {
     this.pokeData = response.results
   }
 
-  private extractId(url: string): string | null {
+  extractId(url: string) {
     const urlObj = new URL(url)
     const pathname = urlObj.pathname
     const match = pathname.match(/\/(\d+)\/$/)
     return match ? match[1] : null
   }
 
-  onRowClick(pokemon: Pokemon) {
+  onRowClick(pokemon: Resource) {
     const id = this.extractId(pokemon.url)
     this.router.navigate(['/pokemon', id])
   }

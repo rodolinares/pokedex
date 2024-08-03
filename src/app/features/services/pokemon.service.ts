@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 
+import { PokemonDetail } from '@features/models/pokemon-detail.model'
 import { PokemonList } from '@features/models/pokemon-list.model'
 
 @Injectable({ providedIn: 'root' })
@@ -9,8 +10,8 @@ export class PokemonService {
 
   constructor(private http: HttpClient) {}
 
-  get(id: number) {
-    return this.http.get(`${this.apiUrl}/${id}`)
+  get(id: string) {
+    return this.http.get<PokemonDetail>(`${this.apiUrl}/${id}`)
   }
 
   list(offset = 0, limit = 20) {

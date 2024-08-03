@@ -1,13 +1,17 @@
 <nz-table #pokeTable [nzData]="pokeData" [nzPageSize]="20" nzSize="middle">
   <thead>
     <tr>
+      <th nzWidth="150px">#</th>
       <th>Name</th>
+      <th nzWidth="150px"></th>
     </tr>
   </thead>
   <tbody>
     @for (pokemon of pokeTable.data; track pokemon.name) {
       <tr (click)="onRowClick(pokemon)">
+        <td>{{ extractId(pokemon.url) }}</td>
         <td>{{ pokemon.name | titlecase }}</td>
+        <td><button nz-button nzType="primary">View details</button></td>
       </tr>
     }
   </tbody>

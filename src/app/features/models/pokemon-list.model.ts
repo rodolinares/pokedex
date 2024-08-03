@@ -1,11 +1,8 @@
-export interface Pokemon {
-  name: string
-  url: string
-}
+import { Resource } from './resource.model'
 
 export interface PokemonList {
   count: number
   next: string | null
   previous: string | null
-  results: Pokemon[]
+  results: Resource[]
 }
