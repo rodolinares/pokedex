@@ -1,5 +1,5 @@
 import { registerLocaleData } from '@angular/common'
-import { provideHttpClient } from '@angular/common/http'
+import { provideHttpClient, withFetch } from '@angular/common/http'
 import en from '@angular/common/locales/en'
 import { NgModule } from '@angular/core'
 import { FormsModule } from '@angular/forms'
@@ -15,13 +15,13 @@ import { AppComponent } from './app.component'
 registerLocaleData(en)
 
 @NgModule({
-  declarations: [AppComponent],
-  imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [
-    { provide: NZ_I18N, useValue: en_US },
+    provideHttpClient(withFetch()),
     provideAnimationsAsync(),
-    provideHttpClient()
+    { provide: NZ_I18N, useValue: en_US }
   ],
+  declarations: [AppComponent],
+  imports: [FormsModule, BrowserModule, AppRoutingModule],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
