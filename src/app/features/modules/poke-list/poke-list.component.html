@@ -1,1 +1,14 @@
-<p>poke-list works!</p>
+<nz-table #pokeTable [nzData]="pokeData" [nzPageSize]="20" nzSize="middle">
+  <thead>
+    <tr>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (pokemon of pokeTable.data; track pokemon.name) {
+      <tr (click)="onRowClick(pokemon)">
+        <td>{{ pokemon.name | titlecase }}</td>
+      </tr>
+    }
+  </tbody>
+</nz-table>
