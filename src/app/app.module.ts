@@ -8,6 +8,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 
 import { NZ_I18N } from 'ng-zorro-antd/i18n'
 import { en_US } from 'ng-zorro-antd/i18n'
+import { NzLayoutModule } from 'ng-zorro-antd/layout'
 
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
@@ -21,7 +22,7 @@ registerLocaleData(en)
     { provide: NZ_I18N, useValue: en_US }
   ],
   declarations: [AppComponent],
-  imports: [FormsModule, BrowserModule, AppRoutingModule],
+  imports: [FormsModule, BrowserModule, NzLayoutModule, AppRoutingModule],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

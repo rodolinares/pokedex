@@ -1,0 +1,17 @@
+h1 {
+  color: #fff;
+}
+
+nz-content {
+  padding: 40px 50px 0;
+}
+
+nz-footer {
+  text-align: center;
+}
+
+.inner-content {
+  background: #fff;
+  padding: 24px;
+  min-height: calc(100vh - 174px);
+}
