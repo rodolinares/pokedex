@@ -12,6 +12,7 @@ import { PokemonService } from '@features/services/pokemon.service'
   styleUrl: './poke-list.component.css'
 })
 export class PokeListComponent implements OnInit {
+  loading = true
   pokeData: Resource[] = []
 
   constructor(
@@ -20,8 +21,14 @@ export class PokeListComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    const response = await lastValueFrom(this.pokemonService.list())
-    this.pokeData = response.results
+    try {
+      const response = await lastValueFrom(this.pokemonService.list())
+      this.pokeData = response.results
+      this.loading = false
+    } catch (error) {
+      this.loading = false
+      // TODO: Add error message
+    }
   }
 
   extractId(url: string) {

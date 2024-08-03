@@ -1,4 +1,9 @@
-<nz-table #pokeTable [nzData]="pokeData" [nzPageSize]="20" nzSize="middle">
+<nz-table
+  #pokeTable
+  [nzData]="pokeData"
+  [nzLoading]="loading"
+  nzSize="middle"
+>
   <thead>
     <tr>
       <th nzWidth="150px">#</th>

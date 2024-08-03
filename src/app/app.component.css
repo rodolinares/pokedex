@@ -14,4 +14,5 @@ nz-footer {
   background: #fff;
   padding: 24px;
   min-height: calc(100vh - 174px);
+  position: relative;
 }

@@ -12,6 +12,7 @@ import { PokemonService } from '@features/services/pokemon.service'
   styleUrl: './poke-detail.component.css'
 })
 export class PokeDetailComponent implements OnInit {
+  loading = true
   pokemon?: PokemonDetail
 
   constructor(
@@ -23,6 +24,12 @@ export class PokeDetailComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id')
     if (!id) return
 
-    this.pokemon = await lastValueFrom(this.pokemonService.get(id))
+    try {
+      this.pokemon = await lastValueFrom(this.pokemonService.get(id))
+      this.loading = false
+    } catch (error) {
+      this.loading = false
+      // TODO: Add error message
+    }
   }
 }

@@ -14,7 +14,7 @@ export class PokemonService {
     return this.http.get<PokemonDetail>(`${this.apiUrl}/${id}`)
   }
 
-  list(offset = 0, limit = 20) {
+  list(offset = 0, limit = 10) {
     return this.http.get<PokemonList>(
       `${this.apiUrl}?offset=${offset}&limit=${limit}`
     )
