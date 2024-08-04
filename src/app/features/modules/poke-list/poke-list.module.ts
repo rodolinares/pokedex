@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core'
 import { SearchOutline } from '@ant-design/icons-angular/icons'
 import { NzButtonModule } from 'ng-zorro-antd/button'
 import { NzIconModule } from 'ng-zorro-antd/icon'
+import { NzPageHeaderModule } from 'ng-zorro-antd/page-header'
 import { NzTableModule } from 'ng-zorro-antd/table'
 
 import { PokeListRoutingModule } from './poke-list-routing.module'
@@ -17,6 +18,7 @@ const icons = [SearchOutline]
     CommonModule,
     NzButtonModule,
     NzIconModule.forChild(icons),
+    NzPageHeaderModule,
     NzTableModule,
     PokeListRoutingModule
   ]
