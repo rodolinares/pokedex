@@ -1,5 +1,4 @@
 import { registerLocaleData } from '@angular/common'
-import { provideHttpClient, withFetch } from '@angular/common/http'
 import en from '@angular/common/locales/en'
 import { NgModule } from '@angular/core'
 import { FormsModule } from '@angular/forms'
@@ -16,11 +15,7 @@ import { AppComponent } from './app.component'
 registerLocaleData(en)
 
 @NgModule({
-  providers: [
-    provideHttpClient(withFetch()),
-    provideAnimationsAsync(),
-    { provide: NZ_I18N, useValue: en_US }
-  ],
+  providers: [provideAnimationsAsync(), { provide: NZ_I18N, useValue: en_US }],
   declarations: [AppComponent],
   imports: [FormsModule, BrowserModule, NzLayoutModule, AppRoutingModule],
   bootstrap: [AppComponent]

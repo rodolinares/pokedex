@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 
-import { lastValueFrom } from 'rxjs'
+import { Pokemon } from 'pokeapi-js-wrapper'
 
-import { PokeDetail } from '@features/models/poke-detail.model'
 import { PokemonService } from '@features/services/pokemon.service'
 
 @Component({
@@ -16,7 +15,7 @@ export class PokeDetailComponent implements OnInit {
   canGoBack = false
   error = false
   loading = true
-  pokemon?: PokeDetail
+  pokemon?: Pokemon
   total = 10277
 
   constructor(
@@ -30,7 +29,7 @@ export class PokeDetailComponent implements OnInit {
       const id = params['id']
 
       try {
-        this.pokemon = await lastValueFrom(this.pokemonService.get(id))
+        this.pokemon = await this.pokemonService.get(id)
         this.canGoBack = this.pokemon.id > 1
         this.canGoAhead = this.pokemon.id < this.total
         this.playCry(this.pokemon)
@@ -58,8 +57,8 @@ export class PokeDetailComponent implements OnInit {
     }
   }
 
-  playCry(pokemon: PokeDetail) {
-    const audio = new Audio(pokemon.cries.legacy || pokemon.cries.latest)
+  playCry(pokemon: Pokemon) {
+    const audio = new Audio(pokemon['cries'].legacy || pokemon['cries'].latest)
     audio.volume = 0.1
     audio.play()
   }

@@ -2,9 +2,8 @@ import { Component } from '@angular/core'
 import { Router } from '@angular/router'
 
 import { NzTableQueryParams } from 'ng-zorro-antd/table'
-import { lastValueFrom } from 'rxjs'
+import { NamedAPIResource } from 'pokeapi-js-wrapper'
 
-import { Resource } from '@features/models/resource.model'
 import { PokemonService } from '@features/services/pokemon.service'
 
 @Component({
@@ -15,7 +14,7 @@ import { PokemonService } from '@features/services/pokemon.service'
 export class PokeListComponent {
   error = false
   loading = true
-  data: Resource[] = []
+  data: NamedAPIResource[] = []
   total = 0
 
   constructor(
@@ -25,7 +24,7 @@ export class PokeListComponent {
 
   private async listPokemon(offset = 0) {
     try {
-      const response = await lastValueFrom(this.pokemonService.list(offset))
+      const response = await this.pokemonService.list(offset)
       this.data = response.results
       this.total = response.count
       this.loading = false
@@ -48,7 +47,7 @@ export class PokeListComponent {
     return match ? match[1] : null
   }
 
-  onRowClick(pokemon: Resource) {
+  onRowClick(pokemon: NamedAPIResource) {
     const id = this.extractId(pokemon.url)
     this.router.navigate(['/pokemon', id])
   }

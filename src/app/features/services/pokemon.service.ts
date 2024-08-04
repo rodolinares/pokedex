@@ -1,22 +1,23 @@
-import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 
-import { PokeDetail } from '@features/models/poke-detail.model'
-import { PokeList } from '@features/models/poke-list.model'
+import { Pokedex } from 'pokeapi-js-wrapper'
 
 @Injectable({ providedIn: 'root' })
 export class PokemonService {
-  private apiUrl = 'https://pokeapi.co/api/v2/pokemon'
+  private pokedex: Pokedex
 
-  constructor(private http: HttpClient) {}
+  constructor() {
+    this.pokedex = new Pokedex()
+  }
 
   get(id: string) {
-    return this.http.get<PokeDetail>(`${this.apiUrl}/${id}`)
+    return this.pokedex.getPokemonByName(id)
   }
 
   list(offset = 0, limit = 10) {
-    return this.http.get<PokeList>(
-      `${this.apiUrl}?offset=${offset}&limit=${limit}`
-    )
+    return this.pokedex.getPokemonsList({
+      limit,
+      offset
+    })
   }
 }
