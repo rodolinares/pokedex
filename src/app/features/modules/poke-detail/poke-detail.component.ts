@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 
 import { lastValueFrom } from 'rxjs'
 
@@ -18,6 +18,7 @@ export class PokeDetailComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private pokemonService: PokemonService
   ) {}
 
@@ -33,6 +34,10 @@ export class PokeDetailComponent implements OnInit {
       this.error = true
       this.loading = false
     }
+  }
+
+  goBack() {
+    this.router.navigate(['/pokemon'])
   }
 
   playCry(source: string) {
