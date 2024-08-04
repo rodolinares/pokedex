@@ -14,9 +14,9 @@
   >
     <thead>
       <tr>
-        <th nzWidth="150px">#</th>
+        <th>#</th>
         <th>Name</th>
-        <th nzWidth="150px"></th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -24,7 +24,11 @@
         <tr (click)="onRowClick(pokemon)">
           <td>{{ extractId(pokemon.url) }}</td>
           <td>{{ pokemon.name | titlecase }}</td>
-          <td><button nz-button nzType="primary">View details</button></td>
+          <td>
+            <button nz-button nzType="primary">
+              <span nz-icon nzType="search"></span>
+            </button>
+          </td>
         </tr>
       }
     </tbody>

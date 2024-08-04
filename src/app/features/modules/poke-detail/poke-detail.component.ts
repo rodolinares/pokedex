@@ -59,7 +59,7 @@ export class PokeDetailComponent implements OnInit {
   }
 
   playCry(pokemon: PokemonDetail) {
-    const audio = new Audio(pokemon.cries.legacy)
+    const audio = new Audio(pokemon.cries.legacy || pokemon.cries.latest)
     audio.volume = 0.1
     audio.play()
   }
