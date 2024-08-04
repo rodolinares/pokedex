@@ -7,7 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "format": "prettier \"src/**/*.{css,html,ts}\" --write"
+    "format": "prettier \"src/**/*.{css,html,ts}\" --write",
+    "deploy": "ng deploy --base-href=/pokedex/ --repo=https://github.com/rodolinares/pokedex.git"
   },
   "private": true,
   "dependencies": {
