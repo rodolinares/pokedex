@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core'
+import { Component } from '@angular/core'
 import { Router } from '@angular/router'
 
+import { NzTableQueryParams } from 'ng-zorro-antd/table'
 import { lastValueFrom } from 'rxjs'
 
 import { Resource } from '@features/models/resource.model'
@@ -11,24 +12,33 @@ import { PokemonService } from '@features/services/pokemon.service'
   templateUrl: './poke-list.component.html',
   styleUrl: './poke-list.component.css'
 })
-export class PokeListComponent implements OnInit {
+export class PokeListComponent {
+  error = false
   loading = true
-  pokeData: Resource[] = []
+  data: Resource[] = []
+  total = 0
 
   constructor(
     private router: Router,
     private pokemonService: PokemonService
   ) {}
 
-  async ngOnInit() {
+  private async listPokemon(offset = 0) {
     try {
-      const response = await lastValueFrom(this.pokemonService.list())
-      this.pokeData = response.results
+      const response = await lastValueFrom(this.pokemonService.list(offset))
+      this.data = response.results
+      this.total = response.count
       this.loading = false
     } catch (error) {
+      this.error = true
       this.loading = false
-      // TODO: Add error message
     }
+  }
+
+  async onQueryParamsChange(params: NzTableQueryParams) {
+    const { pageIndex } = params
+    const offset = (pageIndex - 1) * 10
+    await this.listPokemon(offset)
   }
 
   extractId(url: string) {

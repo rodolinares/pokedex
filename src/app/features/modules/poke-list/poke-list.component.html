@@ -1,18 +1,32 @@
-<nz-table #pokeTable [nzData]="pokeData" [nzLoading]="loading" nzSize="middle">
-  <thead>
-    <tr>
-      <th nzWidth="150px">#</th>
-      <th>Name</th>
-      <th nzWidth="150px"></th>
-    </tr>
-  </thead>
-  <tbody>
-    @for (pokemon of pokeTable.data; track pokemon) {
-      <tr (click)="onRowClick(pokemon)">
-        <td>{{ extractId(pokemon.url) }}</td>
-        <td>{{ pokemon.name | titlecase }}</td>
-        <td><button nz-button nzType="primary">View details</button></td>
+@if (error) {
+  <div class="error">
+    <p>Error loading Pokémon data. Please try again later.</p>
+  </div>
+} @else {
+  <nz-table
+    #pokeTable
+    [nzData]="data"
+    [nzFrontPagination]="false"
+    [nzLoading]="loading"
+    (nzQueryParams)="onQueryParamsChange($event)"
+    nzSize="middle"
+    [nzTotal]="total"
+  >
+    <thead>
+      <tr>
+        <th nzWidth="150px">#</th>
+        <th>Name</th>
+        <th nzWidth="150px"></th>
       </tr>
-    }
-  </tbody>
-</nz-table>
+    </thead>
+    <tbody>
+      @for (pokemon of pokeTable.data; track pokemon.name) {
+        <tr (click)="onRowClick(pokemon)">
+          <td>{{ extractId(pokemon.url) }}</td>
+          <td>{{ pokemon.name | titlecase }}</td>
+          <td><button nz-button nzType="primary">View details</button></td>
+        </tr>
+      }
+    </tbody>
+  </nz-table>
+}
