@@ -16,42 +16,43 @@
 
       <div class="poke-types">
         <strong>Type: </strong>
-        @for (type of pokemon.types; track $index) {
+        @for (type of pokemon.types; track type) {
           <nz-tag> {{ type.type.name | titlecase }} </nz-tag>
         }
       </div>
 
       <div class="poke-abilities">
         <strong>Abilities:</strong>
-        <ul>
-          @for (ability of pokemon.abilities; track $index) {
-            <li>{{ ability.ability.name | titlecase }}</li>
+        <nz-list nzSize="small">
+          @for (ability of pokemon.abilities; track ability) {
+            <nz-list-item>
+              {{ ability.ability.name | titlecase }}
+            </nz-list-item>
           }
-        </ul>
+        </nz-list>
       </div>
 
       <div class="poke-stats">
         <strong>Stats:</strong>
-        <ul>
-          @for (stat of pokemon.stats; track $index) {
-            <li>
-              <strong>{{ stat.stat.name | titlecase }}:</strong>
-              {{ stat.base_stat }}
-            </li>
+        <nz-list nzSize="small">
+          @for (stat of pokemon.stats; track stat) {
+            <nz-list-item>
+              {{ stat.stat.name | titlecase }}: {{ stat.base_stat }}
+            </nz-list-item>
           }
-        </ul>
+        </nz-list>
       </div>
 
       <div class="poke-moves">
         <strong>Moves:</strong>
-        <ul>
-          @for (move of pokemon.moves.slice(0, 10); track $index) {
-            <li>{{ move.move.name | titlecase }}</li>
+        <nz-list nzSize="small">
+          @for (move of pokemon.moves.slice(0, 10); track move) {
+            <nz-list-item> {{ move.move.name | titlecase }} </nz-list-item>
           }
-        </ul>
-        @if (pokemon.moves.length > 10) {
-          <p>...and more</p>
-        }
+          @if (pokemon.moves.length > 10) {
+            <nz-list-item> and more... </nz-list-item>
+          }
+        </nz-list>
       </div>
     </div>
   </div>
