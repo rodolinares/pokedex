@@ -12,6 +12,8 @@
     [nzData]="data"
     [nzFrontPagination]="false"
     [nzLoading]="loading"
+    [(nzPageIndex)]="tableService.pageIndex"
+    [nzPageSize]="tableService.pageSize"
     (nzQueryParams)="onQueryParamsChange($event)"
     nzSize="middle"
     [nzTotal]="total"

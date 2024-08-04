@@ -5,6 +5,7 @@ import { NzTableQueryParams } from 'ng-zorro-antd/table'
 import { NamedAPIResource } from 'pokeapi-js-wrapper'
 
 import { PokemonService } from '@features/services/pokemon.service'
+import { TableService } from '@features/services/table.service'
 
 @Component({
   selector: 'app-poke-list',
@@ -12,18 +13,20 @@ import { PokemonService } from '@features/services/pokemon.service'
   styleUrl: './poke-list.component.css'
 })
 export class PokeListComponent {
+  data: NamedAPIResource[] = []
   error = false
   loading = true
-  data: NamedAPIResource[] = []
   total = 0
 
   constructor(
     private router: Router,
-    private pokemonService: PokemonService
+    private pokemonService: PokemonService,
+    public tableService: TableService
   ) {}
 
   private async listPokemon(offset = 0) {
     try {
+      this.loading = true
       const response = await this.pokemonService.list(offset)
       this.data = response.results
       this.total = response.count
@@ -36,8 +39,9 @@ export class PokeListComponent {
 
   async onQueryParamsChange(params: NzTableQueryParams) {
     const { pageIndex } = params
-    const offset = (pageIndex - 1) * 10
+    const offset = (pageIndex - 1) * this.tableService.pageSize
     await this.listPokemon(offset)
+    this.tableService.pageIndex = pageIndex
   }
 
   extractId(url: string) {
@@ -49,6 +53,8 @@ export class PokeListComponent {
 
   onRowClick(pokemon: NamedAPIResource) {
     const id = this.extractId(pokemon.url)
+    if (!id) return
+
     this.router.navigate(['/pokemon', id])
   }
 }

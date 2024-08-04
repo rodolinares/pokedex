@@ -2,11 +2,13 @@ import { Injectable } from '@angular/core'
 
 import { Pokedex } from 'pokeapi-js-wrapper'
 
+import { TableService } from './table.service'
+
 @Injectable({ providedIn: 'root' })
 export class PokemonService {
   private pokedex: Pokedex
 
-  constructor() {
+  constructor(private tableService: TableService) {
     this.pokedex = new Pokedex()
   }
 
@@ -14,9 +16,9 @@ export class PokemonService {
     return this.pokedex.getPokemonByName(id)
   }
 
-  list(offset = 0, limit = 10) {
+  list(offset = 0) {
     return this.pokedex.getPokemonsList({
-      limit,
+      limit: this.tableService.pageSize,
       offset
     })
   }
