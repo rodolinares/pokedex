@@ -6,6 +6,7 @@ import { lastValueFrom } from 'rxjs'
 
 import { Resource } from '@features/models/resource.model'
 import { PokemonService } from '@features/services/pokemon.service'
+import { PAGE_SIZE } from '@shared/utils/constants'
 
 @Component({
   selector: 'app-poke-list',
@@ -13,9 +14,10 @@ import { PokemonService } from '@features/services/pokemon.service'
   styleUrl: './poke-list.component.css'
 })
 export class PokeListComponent {
+  data: Resource[] = []
   error = false
   loading = true
-  data: Resource[] = []
+  pageSize = PAGE_SIZE
   total = 0
 
   constructor(
@@ -37,7 +39,7 @@ export class PokeListComponent {
 
   async onQueryParamsChange(params: NzTableQueryParams) {
     const { pageIndex } = params
-    const offset = (pageIndex - 1) * 10
+    const offset = (pageIndex - 1) * this.pageSize
     await this.listPokemon(offset)
   }
 
@@ -50,6 +52,8 @@ export class PokeListComponent {
 
   onRowClick(pokemon: Resource) {
     const id = this.extractId(pokemon.url)
+    if (!id) return
+
     this.router.navigate(['/pokemon', id])
   }
 }

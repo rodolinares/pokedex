@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core'
 
 import { PokeDetail } from '@features/models/poke-detail.model'
 import { PokeList } from '@features/models/poke-list.model'
+import { PAGE_SIZE } from '@shared/utils/constants'
 
 @Injectable({ providedIn: 'root' })
 export class PokemonService {
@@ -14,9 +15,9 @@ export class PokemonService {
     return this.http.get<PokeDetail>(`${this.apiUrl}/${id}`)
   }
 
-  list(offset = 0, limit = 10) {
+  list(offset = 0) {
     return this.http.get<PokeList>(
-      `${this.apiUrl}?offset=${offset}&limit=${limit}`
+      `${this.apiUrl}?offset=${offset}&limit=${PAGE_SIZE}`
     )
   }
 }
