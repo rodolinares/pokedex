@@ -30,7 +30,7 @@
         </ul>
       </div>
 
-      <div class="poke-stats" *ngIf="pokemon.stats">
+      <div class="poke-stats">
         <strong>Stats:</strong>
         <ul>
           @for (stat of pokemon.stats; track $index) {
@@ -49,7 +49,9 @@
             <li>{{ move.move.name | titlecase }}</li>
           }
         </ul>
-        <p *ngIf="pokemon.moves.length > 10">...and more</p>
+        @if (pokemon.moves.length > 10) {
+          <p>...and more</p>
+        }
       </div>
     </div>
   </div>
@@ -57,4 +59,10 @@
 
 @if (loading) {
   <app-spinner></app-spinner>
+}
+
+@if (error) {
+  <div class="error">
+    <p>Error loading Pokémon data. Please try again later.</p>
+  </div>
 }

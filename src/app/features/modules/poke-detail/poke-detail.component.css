@@ -25,3 +25,9 @@
 .poke-moves ul {
   margin-right: 8px;
 }
+
+.error {
+  color: red;
+  text-align: center;
+  margin-top: 16px;
+}
