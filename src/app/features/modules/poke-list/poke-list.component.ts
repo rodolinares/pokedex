@@ -6,7 +6,7 @@ import { lastValueFrom } from 'rxjs'
 
 import { Resource } from '@features/models/resource.model'
 import { PokemonService } from '@features/services/pokemon.service'
-import { PAGE_SIZE } from '@shared/utils/constants'
+import { TableService } from '@features/services/table.service'
 
 @Component({
   selector: 'app-poke-list',
@@ -17,16 +17,17 @@ export class PokeListComponent {
   data: Resource[] = []
   error = false
   loading = true
-  pageSize = PAGE_SIZE
   total = 0
 
   constructor(
     private router: Router,
-    private pokemonService: PokemonService
+    private pokemonService: PokemonService,
+    public tableService: TableService
   ) {}
 
   private async listPokemon(offset = 0) {
     try {
+      this.loading = true
       const response = await lastValueFrom(this.pokemonService.list(offset))
       this.data = response.results
       this.total = response.count
@@ -39,8 +40,9 @@ export class PokeListComponent {
 
   async onQueryParamsChange(params: NzTableQueryParams) {
     const { pageIndex } = params
-    const offset = (pageIndex - 1) * this.pageSize
+    const offset = (pageIndex - 1) * this.tableService.pageSize
     await this.listPokemon(offset)
+    this.tableService.pageIndex = pageIndex
   }
 
   extractId(url: string) {
