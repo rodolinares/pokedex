@@ -12,9 +12,12 @@ import { PokemonService } from '@features/services/pokemon.service'
   styleUrl: './poke-detail.component.css'
 })
 export class PokeDetailComponent implements OnInit {
+  canGoAhead = false
+  canGoBack = false
   error = false
   loading = true
   pokemon?: PokemonDetail
+  total = 10277
 
   constructor(
     private route: ActivatedRoute,
@@ -22,26 +25,41 @@ export class PokeDetailComponent implements OnInit {
     private pokemonService: PokemonService
   ) {}
 
-  async ngOnInit() {
-    const id = this.route.snapshot.paramMap.get('id')
-    if (!id) return
+  ngOnInit() {
+    this.route.params.subscribe(async params => {
+      const id = params['id']
 
-    try {
-      this.pokemon = await lastValueFrom(this.pokemonService.get(id))
-      this.playCry(this.pokemon.cries.latest)
-      this.loading = false
-    } catch (error) {
-      this.error = true
-      this.loading = false
-    }
+      try {
+        this.pokemon = await lastValueFrom(this.pokemonService.get(id))
+        this.canGoBack = this.pokemon.id > 1
+        this.canGoAhead = this.pokemon.id < this.total
+        this.playCry(this.pokemon)
+        this.loading = false
+      } catch (error) {
+        this.error = true
+        this.loading = false
+      }
+    })
   }
 
   goBack() {
     this.router.navigate(['/pokemon'])
   }
 
-  playCry(source: string) {
-    const audio = new Audio(source)
+  prev() {
+    if (this.pokemon && this.pokemon.id > 1) {
+      this.router.navigate(['/pokemon', this.pokemon.id - 1])
+    }
+  }
+
+  next() {
+    if (this.pokemon && this.pokemon.id < this.total) {
+      this.router.navigate(['/pokemon', this.pokemon.id + 1])
+    }
+  }
+
+  playCry(pokemon: PokemonDetail) {
+    const audio = new Audio(pokemon.cries.legacy)
     audio.volume = 0.1
     audio.play()
   }

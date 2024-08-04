@@ -1,8 +1,29 @@
-<nz-page-header
-  nzTitle="Details"
-  (nzBack)="goBack()"
-  nzBackIcon="arrow-left"
-></nz-page-header>
+<nz-page-header nzBackIcon (nzBack)="goBack()">
+  <nz-page-header-title>Details</nz-page-header-title>
+  <nz-page-header-extra>
+    <nz-space>
+      <button
+        *nzSpaceItem
+        nz-button
+        nzType="primary"
+        (click)="prev()"
+        [disabled]="!canGoBack"
+      >
+        Previous
+      </button>
+
+      <button
+        *nzSpaceItem
+        nz-button
+        nzType="primary"
+        (click)="next()"
+        [disabled]="!canGoAhead"
+      >
+        Next
+      </button>
+    </nz-space>
+  </nz-page-header-extra>
+</nz-page-header>
 
 @if (pokemon) {
   <div nz-row nzGutter="16">
@@ -11,7 +32,7 @@
         [src]="pokemon.sprites.front_default"
         [alt]="pokemon.name"
         class="responsive-img"
-        (click)="playCry(pokemon.cries.latest)"
+        (click)="playCry(pokemon)"
       />
     </div>
 
@@ -24,7 +45,7 @@
 
       <div class="poke-types">
         <strong>Type: </strong>
-        @for (type of pokemon.types; track type) {
+        @for (type of pokemon.types; track type.type.name) {
           <nz-tag> {{ type.type.name | titlecase }} </nz-tag>
         }
       </div>
@@ -32,7 +53,7 @@
       <div class="poke-abilities">
         <strong>Abilities:</strong>
         <nz-list nzSize="small">
-          @for (ability of pokemon.abilities; track ability) {
+          @for (ability of pokemon.abilities; track ability.ability.name) {
             <nz-list-item>
               {{ ability.ability.name | titlecase }}
             </nz-list-item>
@@ -43,7 +64,7 @@
       <div class="poke-stats">
         <strong>Stats:</strong>
         <nz-list nzSize="small">
-          @for (stat of pokemon.stats; track stat) {
+          @for (stat of pokemon.stats; track stat.stat.name) {
             <nz-list-item>
               {{ stat.stat.name | titlecase }}: {{ stat.base_stat }}
             </nz-list-item>
@@ -54,7 +75,7 @@
       <div class="poke-moves">
         <strong>Moves:</strong>
         <nz-list nzSize="small">
-          @for (move of pokemon.moves.slice(0, 10); track move) {
+          @for (move of pokemon.moves.slice(0, 10); track move.move.name) {
             <nz-list-item> {{ move.move.name | titlecase }} </nz-list-item>
           }
           @if (pokemon.moves.length > 10) {
