@@ -32,4 +32,8 @@ export class PokeDetailComponent implements OnInit {
       // TODO: Add error message
     }
   }
+
+  formatId(id: number) {
+    return id.toString().padStart(4, '0')
+  }
 }

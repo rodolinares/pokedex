@@ -1,0 +1,27 @@
+.poke-image {
+  text-align: center;
+}
+
+.responsive-img {
+  width: 100%;
+  max-width: 200px;
+  height: auto;
+}
+
+.poke-details {
+  padding: 16px;
+}
+
+.poke-types,
+.poke-abilities,
+.poke-stats,
+.poke-moves {
+  margin-top: 16px;
+}
+
+.poke-types nz-tag,
+.poke-abilities ul,
+.poke-stats ul,
+.poke-moves ul {
+  margin-right: 8px;
+}

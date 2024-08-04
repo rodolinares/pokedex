@@ -1,9 +1,4 @@
-<nz-table
-  #pokeTable
-  [nzData]="pokeData"
-  [nzLoading]="loading"
-  nzSize="middle"
->
+<nz-table #pokeTable [nzData]="pokeData" [nzLoading]="loading" nzSize="middle">
   <thead>
     <tr>
       <th nzWidth="150px">#</th>
@@ -12,7 +7,7 @@
     </tr>
   </thead>
   <tbody>
-    @for (pokemon of pokeTable.data; track pokemon.name) {
+    @for (pokemon of pokeTable.data; track $index) {
       <tr (click)="onRowClick(pokemon)">
         <td>{{ extractId(pokemon.url) }}</td>
         <td>{{ pokemon.name | titlecase }}</td>

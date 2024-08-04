@@ -1,8 +1,58 @@
 @if (pokemon) {
-  <h1>{{ pokemon.name | uppercase }}</h1>
-  <img [src]="pokemon.sprites.front_default" alt="{{ pokemon.name }}" />
-  <p><strong>Height:</strong> {{ pokemon.height }}</p>
-  <p><strong>Weight:</strong> {{ pokemon.weight }}</p>
+  <div nz-row nzGutter="16">
+    <div nz-col [nzSpan]="24" [nzMd]="8" class="poke-image">
+      <img
+        [src]="pokemon.sprites.front_default"
+        [alt]="pokemon.name"
+        class="responsive-img"
+      />
+    </div>
+    <div nz-col [nzSpan]="24" [nzMd]="16" class="poke-details">
+      <h1>{{ pokemon.name | titlecase }}</h1>
+      <p>#{{ formatId(pokemon.id) }}</p>
+
+      <div><strong>Height:</strong> {{ pokemon.height / 10 }} m</div>
+      <div><strong>Weight:</strong> {{ pokemon.weight / 10 }} kg</div>
+
+      <div class="poke-types">
+        <strong>Type: </strong>
+        @for (type of pokemon.types; track $index) {
+          <nz-tag> {{ type.type.name | titlecase }} </nz-tag>
+        }
+      </div>
+
+      <div class="poke-abilities">
+        <strong>Abilities:</strong>
+        <ul>
+          @for (ability of pokemon.abilities; track $index) {
+            <li>{{ ability.ability.name | titlecase }}</li>
+          }
+        </ul>
+      </div>
+
+      <div class="poke-stats" *ngIf="pokemon.stats">
+        <strong>Stats:</strong>
+        <ul>
+          @for (stat of pokemon.stats; track $index) {
+            <li>
+              <strong>{{ stat.stat.name | titlecase }}:</strong>
+              {{ stat.base_stat }}
+            </li>
+          }
+        </ul>
+      </div>
+
+      <div class="poke-moves">
+        <strong>Moves:</strong>
+        <ul>
+          @for (move of pokemon.moves.slice(0, 10); track $index) {
+            <li>{{ move.move.name | titlecase }}</li>
+          }
+        </ul>
+        <p *ngIf="pokemon.moves.length > 10">...and more</p>
+      </div>
+    </div>
+  </div>
 }
 
 @if (loading) {
