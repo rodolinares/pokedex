@@ -27,11 +27,18 @@ export class PokeDetailComponent implements OnInit {
 
     try {
       this.pokemon = await lastValueFrom(this.pokemonService.get(id))
+      this.playCry(this.pokemon.cries.latest)
       this.loading = false
     } catch (error) {
       this.error = true
       this.loading = false
     }
+  }
+
+  playCry(source: string) {
+    const audio = new Audio(source)
+    audio.volume = 0.1
+    audio.play()
   }
 
   formatId(id: number) {

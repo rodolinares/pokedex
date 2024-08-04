@@ -5,8 +5,10 @@
         [src]="pokemon.sprites.front_default"
         [alt]="pokemon.name"
         class="responsive-img"
+        (click)="playCry(pokemon.cries.latest)"
       />
     </div>
+
     <div nz-col [nzSpan]="24" [nzMd]="16" class="poke-details">
       <h1>{{ pokemon.name | titlecase }}</h1>
       <p>#{{ formatId(pokemon.id) }}</p>
