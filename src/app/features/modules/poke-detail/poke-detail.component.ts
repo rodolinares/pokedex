@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router'
 
 import { lastValueFrom } from 'rxjs'
 
-import { PokemonDetail } from '@features/models/pokemon-detail.model'
+import { PokeDetail } from '@features/models/poke-detail.model'
 import { PokemonService } from '@features/services/pokemon.service'
 
 @Component({
@@ -16,7 +16,7 @@ export class PokeDetailComponent implements OnInit {
   canGoBack = false
   error = false
   loading = true
-  pokemon?: PokemonDetail
+  pokemon?: PokeDetail
   total = 10277
 
   constructor(
@@ -58,7 +58,7 @@ export class PokeDetailComponent implements OnInit {
     }
   }
 
-  playCry(pokemon: PokemonDetail) {
+  playCry(pokemon: PokeDetail) {
     const audio = new Audio(pokemon.cries.legacy || pokemon.cries.latest)
     audio.volume = 0.1
     audio.play()

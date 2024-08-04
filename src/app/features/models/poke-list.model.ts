@@ -1,6 +1,6 @@
 import { Resource } from './resource.model'
 
-export interface PokemonList {
+export interface PokeList {
   count: number
   next: string | null
   previous: string | null

@@ -64,7 +64,7 @@ interface PokeStat {
   base_stat: number
 }
 
-export interface PokemonDetail {
+export interface PokeDetail {
   id: number
   name: string
   base_experience: number
