@@ -7,6 +7,31 @@
     <p>Error loading Pokémon data. Please try again later.</p>
   </div>
 } @else {
+  <div class="search">
+    <nz-input-group [nzSuffix]="suffix">
+      <input
+        type="text"
+        nz-input
+        placeholder="Search Pokémon"
+        [nzAutocomplete]="auto"
+        [formControl]="filterControl"
+      />
+    </nz-input-group>
+    <ng-template #suffix>
+      <span nz-icon nzType="search"></span>
+    </ng-template>
+    <nz-autocomplete #auto>
+      @for (pokemon of filteredData | async; track pokemon.name) {
+        <nz-auto-option
+          [nzValue]="pokemon.name"
+          (click)="onSearchResultClick(pokemon)"
+        >
+          {{ pokemon.name | titlecase }}
+        </nz-auto-option>
+      }
+    </nz-autocomplete>
+  </div>
+
   <nz-table
     #pokeTable
     [nzData]="data"

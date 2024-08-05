@@ -1,3 +1,13 @@
+.error {
+  color: red;
+  text-align: center;
+  margin-top: 16px;
+}
+
+.search {
+  margin-bottom: 16px;
+}
+
 tbody tr {
   cursor: pointer;
 }
@@ -7,10 +17,4 @@ td:first-child,
 th:last-child,
 td:last-child {
   text-align: center;
-}
-
-.error {
-  color: red;
-  text-align: center;
-  margin-top: 16px;
 }

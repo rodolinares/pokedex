@@ -1,8 +1,16 @@
-import { Component } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
+import { FormControl } from '@angular/forms'
 import { Router } from '@angular/router'
 
 import { NzTableQueryParams } from 'ng-zorro-antd/table'
-import { lastValueFrom } from 'rxjs'
+import {
+  debounceTime,
+  lastValueFrom,
+  Observable,
+  of,
+  startWith,
+  switchMap
+} from 'rxjs'
 
 import { Resource } from '@features/models/resource.model'
 import { PokemonService } from '@features/services/pokemon.service'
@@ -13,17 +21,39 @@ import { TableService } from '@features/services/table.service'
   templateUrl: './poke-list.component.html',
   styleUrl: './poke-list.component.css'
 })
-export class PokeListComponent {
+export class PokeListComponent implements OnInit {
   data: Resource[] = []
   error = false
   loading = true
   total = 0
+
+  filterControl = new FormControl()
+  filteredData!: Observable<Resource[]>
 
   constructor(
     private router: Router,
     private pokemonService: PokemonService,
     public tableService: TableService
   ) {}
+
+  ngOnInit() {
+    this.filteredData = this.filterControl.valueChanges.pipe(
+      startWith(''),
+      debounceTime(300),
+      switchMap(name => (name ? this.pokemonService.search(name) : of([])))
+    )
+  }
+
+  private navigateToPokemonDetail(pokemon: Resource) {
+    const id = this.extractId(pokemon.url)
+    if (!id) return
+
+    this.router.navigate(['/pokemon', id])
+  }
+
+  onSearchResultClick(pokemon: Resource) {
+    this.navigateToPokemonDetail(pokemon)
+  }
 
   private async listPokemon(offset = 0) {
     try {
@@ -53,9 +83,6 @@ export class PokeListComponent {
   }
 
   onRowClick(pokemon: Resource) {
-    const id = this.extractId(pokemon.url)
-    if (!id) return
-
-    this.router.navigate(['/pokemon', id])
+    this.navigateToPokemonDetail(pokemon)
   }
 }
