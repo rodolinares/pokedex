@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { Pokemon } from 'pokeapi-js-wrapper'
 
 import { PokemonService } from '@features/services/pokemon.service'
-import { TOTAL_POKEMONS } from '@shared/utils/constants'
+import { TOTAL_POKEMONS, TYPE_COLORS } from '@shared/utils/constants'
 
 @Component({
   selector: 'app-poke-detail',
@@ -18,6 +18,7 @@ export class PokeDetailComponent implements OnInit {
   loading = true
   pokemon?: Pokemon
   total = TOTAL_POKEMONS
+  typeColors = TYPE_COLORS
 
   constructor(
     private route: ActivatedRoute,
