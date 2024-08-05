@@ -46,7 +46,9 @@
       <div class="poke-types">
         <strong>Type: </strong>
         @for (type of pokemon.types; track type.type.name) {
-          <nz-tag> {{ type.type.name | titlecase }} </nz-tag>
+          <nz-tag [nzColor]="typeColors[type.type.name]">
+            {{ type.type.name | titlecase }}
+          </nz-tag>
         }
       </div>
 
